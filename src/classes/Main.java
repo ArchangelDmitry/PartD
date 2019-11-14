@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-
+        Scanner sc = new Scanner(System.in);
         //Library
         Book[] books = new Book[5];
 
@@ -39,8 +39,8 @@ public class Main {
         books[4].yearBook = 1995;
 
         //Entrance to library
-        int st = 0;
-        while (st == 0) {
+
+        while (true) {
             String oneS = "1. Find the oldest book.";
             String twoS = "2. Find book by a specific author.";
             String threeS = "3. Find books published earlier than the entered year.";
@@ -55,7 +55,7 @@ public class Main {
 
             //Options
             System.out.println("Please, enter value of needed option.(1-3)");
-            Scanner sc = new Scanner(System.in);
+
             int value = sc.nextInt();
 
             //The oldest book
@@ -89,50 +89,48 @@ public class Main {
                 System.out.println(books[4].authorBook);
                 System.out.println();
                 System.out.println("Please type full name of needed author: ");
-                Scanner na = new Scanner(System.in);
-                String nameAuthor = na.nextLine();
+                String nameAuthor = sc.nextLine();
 
-                for (int b = 0; b < books.length; b++) {
-                    if (nameAuthor.equals(books[b].authorBook)) {
+                for (Book book : books) {
+                    if (book.authorBook.toLowerCase().contains(nameAuthor.toLowerCase())) {
 
                         System.out.println();
-                        System.out.println("Book: " + books[b].nameBook);
-                        System.out.println("Year: " + books[b].yearBook);
+                        System.out.println("Book: " + book.nameBook);
+                        System.out.println("Year: " + book.yearBook);
                     }
                 }
 
-            //Previously published books
+                //Previously published books
             } else if (value == 3) {
                 System.out.println("You choose option № " + value);
                 System.out.println(threeS);
                 System.out.println();
                 System.out.println("Please enter year: ");
-                Scanner ye = new Scanner(System.in);
                 int early = sc.nextInt();
 
                 System.out.println("Books that were published earlier than " + early + " year: ");
 
-                for (int y = 0; y < books.length; y++) {
-                    if (books[y].yearBook < early) {
+                for (Book book : books) {
+                    if (book.yearBook < early) {
 
                         System.out.println();
-                        System.out.println("Author: " + books[y].authorBook);
-                        System.out.println("Book: " + books[y].nameBook);
-                        System.out.println("Year: " + books[y].yearBook);
+                        System.out.println("Author: " + book.authorBook);
+                        System.out.println("Book: " + book.nameBook);
+                        System.out.println("Year: " + book.yearBook);
                     }
                 }
 
             } else {
                 System.out.println("You enter incorrect value");
+                break;
             }
 
             System.out.println("Do you want start from beginning? (y/n)");
             Scanner begin = new Scanner(System.in);
             String start = begin.nextLine();
-            if (start.equals("y")) {
-            } else {
-                st = 1;
+            if (!start.equals("y")) {
                 System.out.println("Thank you for visiting.");
+                break;
             }
         }
     }
